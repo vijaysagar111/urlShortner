@@ -3,19 +3,19 @@ const mongoose = require('mongoose')
 const ShortUrl = require('./models/shortUrl')
 const app = express()
 
-mongoose.connect('mongodb://localhost:27017/urlShortener', {
+mongoose.connect('mongodb+srv://vijay:vijay@cluster0.6apnk.mongodb.net/email_db?authSource=admin&replicaSet=atlas-7skrso-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true', {
   useNewUrlParser: true, useUnifiedTopology: true
 })
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 
-app.get('/shorturl', async (req, res) => {
+app.get('/', async (req, res) => {
   const shortUrls = await ShortUrl.find()
   res.render('index', { shortUrls: shortUrls })
 })
 
-app.post('/shorturl/shortUrls', async (req, res) => {
+app.post('/shortUrls', async (req, res) => {
   await ShortUrl.create({ full: req.body.fullUrl })
 
   res.redirect('/')
